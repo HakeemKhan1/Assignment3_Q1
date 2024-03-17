@@ -61,6 +61,9 @@ def updateStudentEmail(student_id, new_email):
         conn.close()
     except psycopg2.Error as e:
         print("Error updating student email:", e)
+    except ValueError as ve:
+        print(ve)
+
 # Function to delete a student
 
 def deleteStudent(student_id):
@@ -80,6 +83,9 @@ def deleteStudent(student_id):
         conn.close()
     except psycopg2.Error as e:
         print("Error deleting student:", e)
+    except ValueError as ve:
+        print(ve)
+
 
 # Function to reset the database to default
 def resetDatabase():
@@ -104,49 +110,47 @@ def resetDatabase():
 
 # Main function to test the application
 def main():
-    #Database application
-
-    print("Start Database Application...")
-    while True:
+        print("Start Database Application...")
         try:
-            print("\n1. Get all students")
-            print("\n2. Add a new student")
-            print("\n3. Update a student's email")
-            print("\n4. Delete a student")
-            print("\n5. Exit")
-            choice = int(input("Enter your choice: "))
-            if choice == 1:
-                print("\nAll students:")
-                getAllStudents()
+            while True:
+                print("\n1. Get all students")
+                print("2. Add a new student")
+                print("3. Update a student's email")
+                print("4. Delete a student")
+                print("5. Exit")
+                choice = int(input("Enter your choice: "))
+                if choice == 1:
+                    print("\nAll students:")
+                    getAllStudents()
 
-            elif choice == 2:
-                firstName = input("Enter the student's first name: ")
-                lastName = input("Enter the student's last name: ")
-                email = input("Enter the student's email: ")
-                enrollmentDate = input("Enter the student's enrollment date (format: YYYY-MM-DD): ")
-                print("\nAdding a new student:")
-                addStudent(firstName, lastName, email , enrollmentDate)
+                elif choice == 2:
+                    firstName = input("Enter the student's first name: ")
+                    lastName = input("Enter the student's last name: ")
+                    email = input("Enter the student's email: ")
+                    enrollmentDate = input("Enter the student's enrollment date (format: YYYY-MM-DD): ")
+                    print("\nAdding a new student:")
+                    addStudent(firstName, lastName, email, enrollmentDate)
 
-            elif choice == 3:
-                studentId = input("Enter the student's ID: ")
-                newEmail = input("Enter the student's new email: ")
-                updateStudentEmail(studentId, newEmail)
-                print("Student email updated successfully.")
+                elif choice == 3:
+                    studentId = input("Enter the student's ID: ")
+                    newEmail = input("Enter the student's new email: ")
+                    updateStudentEmail(studentId, newEmail)
 
-            elif choice == 4:
-                studentId = input("Enter the student's ID: ")
-                print("\nDeleting a student:")
-                deleteStudent(studentId)
 
-            elif choice == 5:
-                resetDatabase()
-                break
-            else:
-                print("Invalid choice. Try again.")
-        except ValueError:
-            print("Invalid choice. Try again.")
 
-    print("Goodbye!")
+                elif choice == 4:
+                    studentId = input("Enter the student's ID: ")
+                    print("\nDeleting a student:")
+                    deleteStudent(studentId)
+
+                elif choice == 5:
+                    resetDatabase()
+                    break
+                else:
+                    print("Invalid choice. Try again.")
+        except KeyboardInterrupt:
+            print("\nProgram terminated by user.")
+        print("Goodbye!")
 
 if __name__ == "__main__":
     main()
